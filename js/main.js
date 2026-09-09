@@ -122,14 +122,30 @@
   }
 
   /* Contact form submission ------------------------------------------------
-     Posts JSON to contact-handler.php (requires PHP hosting — see that
-     file's header comment for static-host alternatives) and shows an
-     inline success/error message without leaving the page. */
+     Wired for Netlify Forms (works because the site is hosted on Netlify —
+     see the data-netlify attribute + hidden form-name field in contact.html).
+     Netlify's own servers intercept this POST and handle storage/email
+     notifications; there's no app code to run, which is why this is the
+     right approach for a static host that can't execute PHP.
+
+     Netlify doesn't return a JSON body — just an HTTP status — so success
+     here means "response.ok", not a parsed message from the server.
+
+     If Brainfield ever moves off Netlify to PHP-capable hosting instead,
+     swap this block for a fetch() to contact-handler.php (kept in this
+     project for that scenario) and remove the data-netlify/form-name
+     markup from contact.html. */
   var contactForm = document.querySelector("#contactForm");
   if (contactForm) {
     var statusBox = contactForm.querySelector("#formStatus");
     var submitBtn = contactForm.querySelector('button[type="submit"]');
     var submitLabel = submitBtn ? submitBtn.innerHTML : "";
+
+    function encodeFormData(data) {
+      return Object.keys(data)
+        .map(function (key) { return encodeURIComponent(key) + "=" + encodeURIComponent(data[key]); })
+        .join("&");
+    }
 
     contactForm.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -144,17 +160,19 @@
       }
       showStatus(null, "Sending your message…");
 
-      fetch("contact-handler.php", {
+      fetch("/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: encodeFormData(payload)
       })
         .then(function (res) {
-          return res.json().catch(function () { return { success: false, message: "Unexpected response from the server." }; });
-        })
-        .then(function (data) {
-          showStatus(!!data.success, data.message || (data.success ? "Message sent." : "Something went wrong."));
-          if (data.success) contactForm.reset();
+          if (res.ok) {
+            var name = (payload.name || "").split(" ")[0];
+            showStatus(true, (name ? "Thanks " + name : "Thanks") + " — we've received your message and will be in touch shortly.");
+            contactForm.reset();
+          } else {
+            showStatus(false, "Something went wrong sending your message. Please email us directly at info@brainfieldng.com.");
+          }
         })
         .catch(function () {
           showStatus(false, "Couldn't reach the server. Please email us directly at info@brainfieldng.com.");
@@ -176,6 +194,62 @@
       statusBox.style.border = "1px solid " + (success === null ? "var(--line)" : success ? "var(--agro-light)" : "#D98C8C");
     }
   }
+
+  /* Slideshow / carousel ---------------------------------------------------
+     Lightweight, dependency-free, supports multiple independent instances
+     per page (each [data-slideshow] manages its own state via closures). */
+  document.querySelectorAll("[data-slideshow]").forEach(function (root) {
+    var track = root.querySelector(".slideshow-track");
+    var slides = Array.prototype.slice.call(root.querySelectorAll(".slide"));
+    var dotsWrap = root.querySelector("[data-slide-dots]");
+    var prevBtn = root.querySelector("[data-slide-prev]");
+    var nextBtn = root.querySelector("[data-slide-next]");
+    if (!track || slides.length < 2) return;
+
+    var index = 0;
+    var timer = null;
+
+    slides.forEach(function (_, i) {
+      var dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "slide-dot" + (i === 0 ? " active" : "");
+      dot.setAttribute("aria-label", "Go to slide " + (i + 1));
+      dot.addEventListener("click", function () { goTo(i); restart(); });
+      if (dotsWrap) dotsWrap.appendChild(dot);
+    });
+    var dots = dotsWrap ? Array.prototype.slice.call(dotsWrap.children) : [];
+
+    function goTo(i) {
+      index = (i + slides.length) % slides.length;
+      track.style.transform = "translateX(-" + index * 100 + "%)";
+      dots.forEach(function (d, di) { d.classList.toggle("active", di === index); });
+    }
+    function next() { goTo(index + 1); }
+    function prev() { goTo(index - 1); }
+    function restart() {
+      if (timer) clearInterval(timer);
+      timer = setInterval(next, 5000);
+    }
+
+    if (nextBtn) nextBtn.addEventListener("click", function () { next(); restart(); });
+    if (prevBtn) prevBtn.addEventListener("click", function () { prev(); restart(); });
+
+    // Touch swipe support.
+    var startX = null;
+    root.addEventListener("touchstart", function (e) { startX = e.touches[0].clientX; }, { passive: true });
+    root.addEventListener("touchend", function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); restart(); }
+      startX = null;
+    }, { passive: true });
+
+    // Pause auto-advance while the user is looking at or interacting with it.
+    root.addEventListener("mouseenter", function () { if (timer) clearInterval(timer); });
+    root.addEventListener("mouseleave", restart);
+
+    restart();
+  });
 
   /* Current year in footer ------------------------------------------------ */
   document.querySelectorAll("[data-year]").forEach(function (el) {

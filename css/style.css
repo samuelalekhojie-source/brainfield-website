@@ -274,7 +274,8 @@ p.body-text{ color: var(--ink-soft); max-width: 58ch; }
   color: var(--ink);
   flex: none;
 }
-.brand img{ width: 36px; height:36px; }
+.brand img{ height: 50px; width: auto; }
+.footer-brand .brand img{ height: 42px; }
 .brand .sub{
   font-family: var(--font-mono);
   font-size: 0.6rem;
@@ -845,3 +846,125 @@ body.menu-open .nav-toggle span:nth-child(3){ transform: translateY(-7px) rotate
 }
 .back-to-top.show{ opacity:1; pointer-events:auto; transform:none; }
 .back-to-top svg{ width:18px; height:18px; }
+
+/* =========================================================================
+   GALLERY SLIDESHOW
+   ========================================================================= */
+.gallery-group{ display:flex; flex-direction:column; gap:1.25rem; }
+.gallery-group-head{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+
+.slideshow{
+  position: relative;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--white);
+  border: 1px solid var(--line);
+}
+.slideshow-viewport{ overflow:hidden; }
+.slideshow-track{
+  display:flex;
+  transition: transform .5s var(--ease);
+}
+.slide{
+  flex: 0 0 100%;
+  min-width:0;
+  position:relative;
+  aspect-ratio: 16/9;
+  display:flex;
+  align-items:flex-end;
+  isolation:isolate;
+}
+.slide img{ position:absolute; inset:0; z-index:-2; width:100%; height:100%; object-fit:cover; }
+.slide::after{
+  content:"";
+  position:absolute; inset:0; z-index:-1;
+  background: linear-gradient(0deg, rgba(10,10,12,0.78) 0%, rgba(10,10,12,0.25) 55%, transparent 80%);
+}
+.slide-caption{
+  position:relative; z-index:1;
+  padding: 1.5rem clamp(1.25rem,3vw,2rem);
+  color: var(--paper);
+  width:100%;
+}
+.slide-caption .eyebrow{ color: var(--lilac); margin-bottom:0.3rem; }
+.slide-caption h4{ color: var(--paper); font-size:1.15rem; font-family:var(--font-display); font-weight:600; }
+.slide-caption p{ color: rgba(251,249,247,0.82); font-size:0.88rem; margin-top:0.3rem; max-width:38ch; }
+
+.slide.is-placeholder{
+  background: var(--accent-tint);
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:0.6rem;
+  text-align:center;
+  padding: 1.5rem;
+}
+.slide.is-placeholder::after{ display:none; }
+.slide.is-placeholder .placeholder-icon{
+  width:52px; height:52px;
+  color: var(--accent);
+  opacity:0.85;
+}
+.slide.is-placeholder .slide-caption{ position:static; color: var(--ink); padding:0; }
+.slide.is-placeholder .slide-caption h4{ color: var(--ink); }
+.slide.is-placeholder .slide-caption p{ color: var(--stone); }
+.slide.is-placeholder .slide-caption .eyebrow{ color: var(--accent); justify-content:center; }
+.placeholder-tag{
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--stone);
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 0.3em 0.7em;
+  border-radius: 999px;
+  margin-top: 0.4rem;
+}
+
+/* Explicit division tones for placeholder slides — needed because the
+   home page itself carries no theme-agro/theme-consult class, so the
+   generic --accent variable can't tell the two galleries apart there. */
+.slide.is-placeholder.tone-consult{ background: var(--consult-tint); }
+.slide.is-placeholder.tone-consult .placeholder-icon{ color: var(--consult); }
+.slide.is-placeholder.tone-consult .slide-caption .eyebrow{ color: var(--consult); }
+.slide.is-placeholder.tone-consult .slide-caption .eyebrow::before{ background: var(--consult); }
+
+.slide.is-placeholder.tone-agro{ background: var(--agro-tint); }
+.slide.is-placeholder.tone-agro .placeholder-icon{ color: var(--agro); }
+.slide.is-placeholder.tone-agro .slide-caption .eyebrow{ color: var(--agro); }
+.slide.is-placeholder.tone-agro .slide-caption .eyebrow::before{ background: var(--agro); }
+
+.slide-nav-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:38px; height:38px; border-radius:50%;
+  background: rgba(251,249,247,0.9); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  z-index:2; color:var(--ink);
+  transition: background .2s ease, transform .2s ease;
+}
+.slide-nav-btn:hover{ background: var(--white); transform: translateY(-50%) scale(1.06); }
+.slide-nav-btn svg{ width:18px; height:18px; }
+.slide-nav-btn.prev{ left:12px; }
+.slide-nav-btn.next{ right:12px; }
+
+.slide-dots{
+  position:absolute; bottom:14px; left:50%; transform:translateX(-50%);
+  display:flex; gap:7px; align-items:center;
+  background: rgba(20,16,24,0.4);
+  padding: 6px 10px;
+  border-radius:999px;
+  z-index:2;
+}
+.slide-dot{
+  width:6px; height:6px; border-radius:50%;
+  background: rgba(255,255,255,0.5);
+  border:none; padding:0; cursor:pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.slide-dot.active{ background:#fff; transform:scale(1.25); }
+
+@media (max-width: 700px){
+  .slide{ aspect-ratio: 4/3; }
+  .slide-nav-btn{ width:34px; height:34px; }
+}

@@ -1,6 +1,16 @@
 <?php
 /**
- * Brainfield Group — contact form handler.
+ * Brainfield Group — contact form handler (PHP / non-Netlify hosting only).
+ *
+ * NOT CURRENTLY WIRED UP. The live site's contact form is currently
+ * configured for Netlify Forms instead (see contact.html's data-netlify
+ * attribute and js/main.js) because the site is hosted on Netlify, which
+ * doesn't execute PHP.
+ *
+ * Keep this file around in case Brainfield ever moves to PHP-capable
+ * hosting (cPanel etc.) instead — in that case, point js/main.js's fetch()
+ * back at this file and remove the data-netlify/form-name markup from
+ * contact.html's <form>.
  *
  * Receives the contact form as JSON (via fetch), validates it, and emails
  * it to the Brainfield inbox with the visitor's address set as Reply-To.
