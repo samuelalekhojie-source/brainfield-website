@@ -253,11 +253,13 @@
 
   /* Image lightbox (gallery page) ------------------------------------------
      Any element with data-lightbox-src opens the shared [data-lightbox]
-     modal; arrows/keys step through all triggers on the page in order. */
+     modal; arrows/keys step through all triggers on the page in order.
+     Exposed as window.reinitLightbox so the CMS loader (js/cms.js) can
+     re-scan for trigger elements after it swaps in gallery images fetched
+     from Supabase — those don't exist yet at the point this file first runs. */
   (function () {
-    var triggers = Array.prototype.slice.call(document.querySelectorAll("[data-lightbox-src]"));
     var modal = document.querySelector("[data-lightbox]");
-    if (!triggers.length || !modal) return;
+    if (!modal) return;
 
     var img = modal.querySelector("img");
     var titleEl = modal.querySelector("[data-lightbox-title]");
@@ -265,10 +267,13 @@
     var closeBtn = modal.querySelector("[data-lightbox-close]");
     var prevBtn = modal.querySelector("[data-lightbox-prev]");
     var nextBtn = modal.querySelector("[data-lightbox-next]");
+    var triggers = [];
     var index = 0;
+    var modalListenersBound = false;
 
     function render() {
       var t = triggers[index];
+      if (!t) return;
       img.src = t.getAttribute("data-lightbox-src");
       if (titleEl) titleEl.textContent = t.getAttribute("data-lightbox-title") || "";
       if (subEl) subEl.textContent = t.getAttribute("data-lightbox-sub") || "";
@@ -283,22 +288,31 @@
       modal.classList.remove("open");
       document.body.classList.remove("menu-open");
     }
-    function next() { index = (index + 1) % triggers.length; render(); }
-    function prev() { index = (index - 1 + triggers.length) % triggers.length; render(); }
+    function next() { if (!triggers.length) return; index = (index + 1) % triggers.length; render(); }
+    function prev() { if (!triggers.length) return; index = (index - 1 + triggers.length) % triggers.length; render(); }
 
-    triggers.forEach(function (t, i) {
-      t.addEventListener("click", function () { open(i); });
-    });
-    if (closeBtn) closeBtn.addEventListener("click", close);
-    if (nextBtn) nextBtn.addEventListener("click", next);
-    if (prevBtn) prevBtn.addEventListener("click", prev);
-    modal.addEventListener("click", function (e) { if (e.target === modal) close(); });
-    document.addEventListener("keydown", function (e) {
-      if (!modal.classList.contains("open")) return;
-      if (e.key === "Escape") close();
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") prev();
-    });
+    function initLightbox() {
+      triggers = Array.prototype.slice.call(document.querySelectorAll("[data-lightbox-src]"));
+      if (!triggers.length) return;
+      triggers.forEach(function (t, i) {
+        t.addEventListener("click", function () { open(i); });
+      });
+      if (modalListenersBound) return;
+      modalListenersBound = true;
+      if (closeBtn) closeBtn.addEventListener("click", close);
+      if (nextBtn) nextBtn.addEventListener("click", next);
+      if (prevBtn) prevBtn.addEventListener("click", prev);
+      modal.addEventListener("click", function (e) { if (e.target === modal) close(); });
+      document.addEventListener("keydown", function (e) {
+        if (!modal.classList.contains("open")) return;
+        if (e.key === "Escape") close();
+        if (e.key === "ArrowRight") next();
+        if (e.key === "ArrowLeft") prev();
+      });
+    }
+
+    initLightbox();
+    window.reinitLightbox = initLightbox;
   })();
 
   /* Current year in footer ------------------------------------------------ */

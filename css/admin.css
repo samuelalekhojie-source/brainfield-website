@@ -1,0 +1,94 @@
+/* Brainfield Admin — styles layered on top of css/style.css.
+   Reuses the site's colour variables (--ink, --paper, --accent, etc.)
+   so the dashboard feels like part of the same brand. */
+
+.admin-body { background: var(--paper-dim); min-height: 100vh; font-family: var(--font-body); }
+
+/* Without this, the [hidden] attribute set by admin.js loses to the
+   `display: flex` rule below (equal CSS specificity, and this rule comes
+   later) — so the login card kept showing even after a successful sign-in. */
+[hidden] { display: none !important; }
+
+/* ---- Login ---- */
+.admin-login {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+}
+.admin-login-card {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-m);
+  padding: 2.5rem; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 1rem;
+}
+.admin-login-logo { height: 40px; width: auto; object-fit: contain; margin-bottom: 0.5rem; }
+.admin-login-card h1 { font-family: var(--font-display); font-size: 1.5rem; margin: 0; }
+.admin-login-card label { display: flex; flex-direction: column; gap: 0.35rem; font-size: 0.9rem; color: var(--stone); }
+.admin-login-card input { padding: 0.7em 0.9em; border: 1px solid var(--line); border-radius: var(--radius-s); font: inherit; }
+.admin-error { color: #8C1E1E; background: #FBEAEA; border: 1px solid #D98C8C; border-radius: var(--radius-s); padding: 0.6em 0.9em; font-size: 0.88rem; margin: 0; }
+
+/* ---- Shell ---- */
+.admin-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.9rem 1.5rem; background: var(--ink); color: var(--paper);
+}
+.admin-brand { font-family: var(--font-display); font-weight: 600; }
+.admin-topbar-right { display: flex; align-items: center; gap: 1rem; }
+.admin-topbar-right .small { color: var(--stone-light); }
+.admin-topbar .btn-ghost { border-color: rgba(251,249,247,0.35); color: var(--paper); }
+
+.admin-body-grid { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 60px); }
+@media (max-width: 780px) { .admin-body-grid { grid-template-columns: 1fr; } }
+
+.admin-sidebar {
+  background: var(--white); border-right: 1px solid var(--line); padding: 1rem 0.75rem;
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.admin-nav-btn {
+  text-align: left; background: none; border: none; padding: 0.65em 0.8em; border-radius: var(--radius-s);
+  font: inherit; font-size: 0.92rem; color: var(--ink-soft); cursor: pointer;
+}
+.admin-nav-btn:hover { background: var(--paper-dim); }
+.admin-nav-btn.active { background: var(--accent-tint); color: var(--accent-deep); font-weight: 600; }
+
+.admin-main { padding: 1.75rem clamp(1rem, 3vw, 2.5rem); max-width: 780px; }
+.admin-main h2 { font-family: var(--font-display); margin-top: 0; }
+
+.admin-section-card {
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-m);
+  padding: 1.4rem; margin-bottom: 1.25rem;
+}
+.admin-section-card h3 { margin-top: 0; font-size: 1rem; color: var(--accent-deep); }
+
+.admin-field { margin-bottom: 1rem; }
+.admin-field label { display: block; font-size: 0.85rem; color: var(--stone); margin-bottom: 0.35rem; }
+.admin-input {
+  width: 100%; padding: 0.65em 0.85em; border: 1px solid var(--line); border-radius: var(--radius-s);
+  font: inherit; font-size: 0.94rem; background: var(--paper);
+}
+.admin-input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+textarea.admin-input { resize: vertical; }
+.admin-input-sm { font-size: 0.85rem; padding: 0.45em 0.6em; }
+
+.admin-image-field { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.admin-image-field .admin-input { flex: 1 1 220px; }
+.admin-image-preview { width: 52px; height: 52px; object-fit: contain; background: var(--paper-dim); border-radius: var(--radius-s); border: 1px solid var(--line); }
+.admin-upload-btn { cursor: pointer; white-space: nowrap; }
+
+.admin-checks { display: flex; flex-wrap: wrap; gap: 1rem; }
+.admin-checks label { display: flex; align-items: center; gap: 0.4em; font-size: 0.88rem; color: var(--ink-soft); }
+
+.admin-actions { display: flex; gap: 0.6rem; margin-top: 0.75rem; }
+.btn-sm { padding: 0.5em 1em; font-size: 0.85rem; }
+
+.admin-gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.admin-gallery-item { display: flex; flex-direction: column; gap: 0.5rem; }
+.admin-gallery-item img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: var(--radius-s); border: 1px solid var(--line); }
+
+.admin-order-btns { display: flex; flex-direction: column; }
+.admin-order-btns button { background: none; border: 1px solid var(--line); cursor: pointer; line-height: 1; padding: 0.15em 0.4em; }
+
+#saveBtn { position: sticky; bottom: 1rem; }
+
+.admin-toast {
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  background: var(--ink); color: var(--paper); padding: 0.8em 1.4em; border-radius: var(--radius-s);
+  font-size: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.25); z-index: 999;
+}
+.admin-toast.error { background: #8C1E1E; }

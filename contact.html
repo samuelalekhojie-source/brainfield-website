@@ -20,7 +20,7 @@
 <header class="site-nav">
   <div class="wrap">
     <a href="index.html" class="brand">
-      <img src="assets/img/brainfield-consult-logo.png" alt="Brainfield Consult Limited">
+      <img src="assets/img/brainfield-consult-logo.png" alt="Brainfield Consult Limited" data-cms-img="global.logo_consult">
     </a>
     <nav class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
@@ -33,9 +33,9 @@
       </a>
     </nav>
     <div class="nav-right">
-      <a href="tel:+2348037212048" class="nav-phone">
+      <a href="tel:+2348037212048" class="nav-phone" data-cms-tel="global.phone">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.5c1.4 2.8 3.7 5.1 6.5 6.5l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.2c0-.6.4-1 1-1h3.9c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.5z"/></svg>
-        +234 803 7212 048
+        <span data-cms="global.phone">+234 803 7212 048</span>
       </a>
       <a href="contact.html" class="btn btn-primary">Get in touch
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -59,8 +59,8 @@
       <div class="breadcrumb" data-reveal><a href="index.html">Home</a> <span>/</span> <span>Contact</span></div>
       <div class="stack" style="max-width:44em;" data-reveal>
         <span class="eyebrow">Get in touch</span>
-        <h1>Let's talk business</h1>
-        <p class="lede">Reach the Brainfield team directly, or send a message and we'll get back to you.</p>
+        <h1 data-cms="contact.hero.title">Let's talk business</h1>
+        <p class="lede" data-cms="contact.hero.lede">Reach the Brainfield team directly, or send a message and we'll get back to you.</p>
       </div>
     </div>
   </section>
@@ -97,7 +97,7 @@
     <div class="wrap grid-2" style="align-items:start;">
       <div class="card" data-reveal>
         <h3>Send a message</h3>
-        <p class="small" style="margin-top:0.5rem; margin-bottom:1.5rem;">We'll get back to you at the email you provide, usually within a business day.</p>
+        <p class="small" style="margin-top:0.5rem; margin-bottom:1.5rem;" data-cms="contact.form.intro">We'll get back to you at the email you provide, usually within a business day.</p>
         <form id="contactForm" name="contact" class="form-grid" method="POST" data-netlify="true" netlify-honeypot="website">
           <!-- Netlify reads this at deploy time to register the form. -->
           <input type="hidden" name="form-name" value="contact">
@@ -144,7 +144,7 @@
         </div>
         <div class="card">
           <h4>Visit us</h4>
-          <p class="small" style="margin-top:0.5rem;">48, Okota Road, Isolo, Lagos — our head office welcomes visitors by appointment. Call ahead on <a href="tel:+2348037212048" style="color:var(--accent); font-weight:600;">+234 803 7212 048</a> to arrange a time.</p>
+          <p class="small" style="margin-top:0.5rem;" data-cms="contact.visit.body">48, Okota Road, Isolo, Lagos — our head office welcomes visitors by appointment. Call ahead to arrange a time.</p>
         </div>
       </div>
     </div>
@@ -155,30 +155,30 @@
     <div class="wrap">
       <div class="section-head" data-reveal>
         <div class="stack">
-          <span class="eyebrow">Corporate information</span>
-          <h2>Our registered advisors</h2>
+          <span class="eyebrow" data-cms="contact.corporate.eyebrow">Corporate information</span>
+          <h2 data-cms="contact.corporate.title">Our registered advisors</h2>
         </div>
       </div>
       <div class="info-grid">
         <div class="card info-card" data-reveal>
           <span class="role-label">Company secretary</span>
-          <h4>Leke Oladeji and Co.</h4>
-          <p>108, Ojuelegba Road, Surulere, Lagos<br>Tel: +234 802 301 0673</p>
+          <h4 data-cms="contact.secretary.name">Leke Oladeji and Co.</h4>
+          <p><span data-cms="contact.secretary.address">108, Ojuelegba Road, Surulere, Lagos</span><br>Tel: <span data-cms="contact.secretary.phone">+234 802 301 0673</span></p>
         </div>
         <div class="card info-card" data-reveal>
           <span class="role-label">Insurance consultant</span>
-          <h4>Albert Ehichioya — Linkage Assurance Plc</h4>
-          <p>Plot 20, Block 94, Providence Street, Lekki Phase 1, Lagos<br>Tel: +234 805 341 3264</p>
+          <h4 data-cms="contact.insurance.name">Albert Ehichioya — Linkage Assurance Plc</h4>
+          <p><span data-cms="contact.insurance.address">Plot 20, Block 94, Providence Street, Lekki Phase 1, Lagos</span><br>Tel: <span data-cms="contact.insurance.phone">+234 805 341 3264</span></p>
         </div>
         <div class="card info-card" data-reveal>
           <span class="role-label">Auditor</span>
-          <h4>Ibukun Owofadeju &amp; Co.</h4>
-          <p>14 Association Avenue, Magodo-Shangisha, Lagos<br>Tel: 0708 414 7758</p>
+          <h4 data-cms="contact.auditor.name">Ibukun Owofadeju &amp; Co.</h4>
+          <p><span data-cms="contact.auditor.address">14 Association Avenue, Magodo-Shangisha, Lagos</span><br>Tel: <span data-cms="contact.auditor.phone">0708 414 7758</span></p>
         </div>
         <div class="card info-card" data-reveal>
           <span class="role-label">Head office</span>
           <h4>Brainfield</h4>
-          <p>48, Okota Road, Isolo, Lagos<br>Tel: +234 803 7212 048</p>
+          <p><span data-cms="global.address">48, Okota Road, Isolo, Lagos</span><br>Tel: <span data-cms="global.phone">+234 803 7212 048</span></p>
         </div>
       </div>
     </div>
@@ -191,9 +191,9 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a href="index.html" class="brand">
-          <img src="assets/img/brainfield-consult-logo.png" alt="Brainfield Consult Limited">
+          <img src="assets/img/brainfield-consult-logo.png" alt="Brainfield Consult Limited" data-cms-img="global.logo_consult">
         </a>
-        <p>A Lagos-based oil and gas marketing company, duly registered under the Nigerian Companies and Allied Matters Act.</p>
+        <p data-cms="global.footer_tagline">A Lagos-based oil and gas marketing company, duly registered under the Nigerian Companies and Allied Matters Act.</p>
         <div class="rc-tags">
           <span class="rc-tag">RC 676934</span>
         </div>
@@ -213,22 +213,22 @@
         <ul class="footer-contact">
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-7.5-7-12a7 7 0 0 1 14 0c0 4.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            48, Okota Road, Isolo, Lagos
+            <span data-cms="global.address">48, Okota Road, Isolo, Lagos</span>
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.6 10.5c1.4 2.8 3.7 5.1 6.5 6.5l2.2-2.2c.3-.3.7-.4 1.1-.3 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.9 21 3 13.1 3 3.2c0-.6.4-1 1-1h3.9c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.5z"/></svg>
-            +234 803 7212 048
+            <span data-cms="global.phone">+234 803 7212 048</span>
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-            info@brainfieldng.com
+            <span data-cms="global.email">info@brainfieldng.com</span>
           </li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© <span data-year></span> Brainfield. All rights reserved.</span>
-      <div class="mark"><img src="assets/img/brainfield-b-trim.png" alt=""> www.brainfieldng.com</div>
+      <div class="mark"><img src="assets/img/brainfield-b-trim.png" alt="" data-cms-img="global.logo_mark"> www.brainfieldng.com</div>
     </div>
   </div>
 </footer>
@@ -237,6 +237,9 @@
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/cms-config.js"></script>
 <script src="js/main.js"></script>
+<script src="js/cms.js"></script>
 </body>
 </html>
