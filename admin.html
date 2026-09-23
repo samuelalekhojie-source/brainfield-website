@@ -6,7 +6,9 @@
 <title>Brainfield Admin — Content Manager</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/admin.css">
 </head>
@@ -14,28 +16,39 @@
 
 <!-- LOGIN -->
 <div id="loginView" class="admin-login">
+  <svg class="hero-arc" viewBox="0 0 600 600" fill="none" aria-hidden="true" style="opacity:0.6;">
+    <path d="M 83.5 175.0 A 250 250 0 1 1 256.6 546.2" stroke="var(--stone-light)" stroke-width="34" stroke-linecap="round" opacity="0.3"/>
+    <path d="M 118.1 195.0 A 210 210 0 1 1 336.5 506.8" stroke="var(--plum)" stroke-width="34" stroke-linecap="round" opacity="0.4"/>
+  </svg>
   <form id="loginForm" class="admin-login-card">
     <img src="assets/img/brainfield-consult-logo.png" alt="Brainfield" class="admin-login-logo">
-    <h1>Admin sign in</h1>
-    <p class="small">Sign in to edit the Brainfield website content.</p>
-    <label>Email
+    <div class="stack" style="gap:0.4rem;">
+      <h1>Sign in</h1>
+      <p class="small">Sign in to edit the Brainfield website.</p>
+    </div>
+    <div class="field">
+      <label for="loginEmail">Email</label>
       <input type="email" id="loginEmail" required autocomplete="username">
-    </label>
-    <label>Password
+    </div>
+    <div class="field">
+      <label for="loginPassword">Password</label>
       <input type="password" id="loginPassword" required autocomplete="current-password">
-    </label>
+    </div>
     <button type="submit" class="btn btn-primary btn-block">Sign in</button>
     <p id="loginError" class="admin-error" hidden></p>
   </form>
 </div>
 
 <!-- DASHBOARD -->
-<div id="dashboardView" class="admin-shell" hidden>
+<div id="dashboardView" hidden>
   <header class="admin-topbar">
-    <span class="admin-brand">Brainfield Admin</span>
+    <div class="admin-wordmark">
+      <strong>Brainfield</strong>
+      <span>Admin</span>
+    </div>
     <div class="admin-topbar-right">
       <span id="userEmail" class="small"></span>
-      <button id="logoutBtn" class="btn btn-ghost btn-sm">Log out</button>
+      <button id="logoutBtn" class="btn btn-outline-dark btn-sm">Log out</button>
     </div>
   </header>
   <div class="admin-body-grid">
